@@ -53,6 +53,175 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          client_email: string | null
+          client_name: string | null
+          color: string
+          created_at: string
+          currency: string
+          deadline: string | null
+          description: string | null
+          id: string
+          position: number
+          rate_amount: number | null
+          rate_type: Database["public"]["Enums"]["rate_type"]
+          status: Database["public"]["Enums"]["project_status"]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          client_email?: string | null
+          client_name?: string | null
+          color?: string
+          created_at?: string
+          currency?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          position?: number
+          rate_amount?: number | null
+          rate_type?: Database["public"]["Enums"]["rate_type"]
+          status?: Database["public"]["Enums"]["project_status"]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          client_email?: string | null
+          client_name?: string | null
+          color?: string
+          created_at?: string
+          currency?: string
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          position?: number
+          rate_amount?: number | null
+          rate_type?: Database["public"]["Enums"]["rate_type"]
+          status?: Database["public"]["Enums"]["project_status"]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      scope_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          estimated_hours: number | null
+          id: string
+          position: number
+          project_id: string
+          status: Database["public"]["Enums"]["scope_status"]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          estimated_hours?: number | null
+          id?: string
+          position?: number
+          project_id: string
+          status?: Database["public"]["Enums"]["scope_status"]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          estimated_hours?: number | null
+          id?: string
+          position?: number
+          project_id?: string
+          status?: Database["public"]["Enums"]["scope_status"]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scope_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      templates: {
+        Row: {
+          category: string | null
+          content: Json
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          content?: Json
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          content?: Json
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      time_entries: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration_minutes: number
+          entry_date: string
+          id: string
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration_minutes: number
+          entry_date?: string
+          id?: string
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          entry_date?: string
+          id?: string
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "time_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -89,6 +258,14 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      project_status:
+        | "draft"
+        | "active"
+        | "in_review"
+        | "completed"
+        | "archived"
+      rate_type: "hourly" | "fixed"
+      scope_status: "pending" | "in_progress" | "done"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -217,6 +394,9 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      project_status: ["draft", "active", "in_review", "completed", "archived"],
+      rate_type: ["hourly", "fixed"],
+      scope_status: ["pending", "in_progress", "done"],
     },
   },
 } as const
