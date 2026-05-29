@@ -24,8 +24,9 @@ export function Nav() {
               <Link to="/login">Sign in</Link>
             </Button>
             <Button asChild size="sm" className="bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-90">
-              <Link to="/login">Start free</Link>
+              <Link to="/signup">Start free</Link>
             </Button>
+
           </div>
         </div>
       </div>
