@@ -72,12 +72,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Zelvra — Freelance without fear." },
       { name: "description", content: "The operating system for freelancers: contracts, escrow, secure delivery, AI assistant, and analytics in one workspace." },
       { name: "theme-color", content: "#7F77DD" },
@@ -98,7 +92,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
-});
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
