@@ -127,6 +127,25 @@ function ProjectDetailPage() {
         />
       </div>
 
+      <Card className="bg-card/40 border-border/60">
+        <CardHeader>
+          <CardTitle className="font-display text-lg flex items-center gap-2"><Link2 className="w-4 h-4 text-primary" /> Client portal</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-2">Share this link with your client. They can view scope, sign contracts, and download files — no account needed.</p>
+          <div className="flex gap-2">
+            <Input readOnly value={`${typeof window !== "undefined" ? window.location.origin : ""}/portal/${project.share_token}`} className="text-xs font-mono" />
+            <Button
+              variant="outline"
+              onClick={() => {
+                navigator.clipboard.writeText(`${window.location.origin}/portal/${project.share_token}`);
+                toast.success("Portal link copied");
+              }}
+            >Copy</Button>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="bg-card/40 border-border/60">
           <CardHeader><CardTitle className="font-display text-lg">Scope</CardTitle></CardHeader>
@@ -137,6 +156,13 @@ function ProjectDetailPage() {
           <CardContent><TimeTracker projectId={project.id} /></CardContent>
         </Card>
       </div>
+
+      <Card className="bg-card/40 border-border/60">
+        <CardHeader>
+          <CardTitle className="font-display text-lg flex items-center gap-2"><FolderOpen className="w-4 h-4 text-primary" /> Files</CardTitle>
+        </CardHeader>
+        <CardContent><FileManager projectId={project.id} /></CardContent>
+      </Card>
     </div>
   );
 }
