@@ -5,11 +5,13 @@ import { STATUS_ORDER, STATUS_META, formatMoney, type Project, type ProjectStatu
 import { StatusBadge } from "@/components/projects/StatusBadge";
 import { ScopeItems } from "@/components/projects/ScopeItems";
 import { TimeTracker } from "@/components/projects/TimeTracker";
+import { FileManager } from "@/components/projects/FileManager";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Trash2, Mail, Calendar, User } from "lucide-react";
+import { ArrowLeft, Trash2, Mail, Calendar, User, Link2, FolderOpen } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/projects/$id")({
