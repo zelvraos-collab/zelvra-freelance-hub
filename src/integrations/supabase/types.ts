@@ -14,6 +14,174 @@ export type Database = {
   }
   public: {
     Tables: {
+      contract_appendices: {
+        Row: {
+          amount: number | null
+          body: string
+          client_signature: string | null
+          client_signed_at: string | null
+          contract_id: string
+          created_at: string
+          id: string
+          status: Database["public"]["Enums"]["contract_status"]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number | null
+          body?: string
+          client_signature?: string | null
+          client_signed_at?: string | null
+          contract_id: string
+          created_at?: string
+          id?: string
+          status?: Database["public"]["Enums"]["contract_status"]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number | null
+          body?: string
+          client_signature?: string | null
+          client_signed_at?: string | null
+          contract_id?: string
+          created_at?: string
+          id?: string
+          status?: Database["public"]["Enums"]["contract_status"]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contract_appendices_contract_id_fkey"
+            columns: ["contract_id"]
+            isOneToOne: false
+            referencedRelation: "contracts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contracts: {
+        Row: {
+          body: string
+          client_email: string | null
+          client_name: string | null
+          client_signature: string | null
+          client_signed_at: string | null
+          created_at: string
+          currency: string
+          freelancer_signature: string | null
+          freelancer_signed_at: string | null
+          id: string
+          project_id: string
+          sent_at: string | null
+          status: Database["public"]["Enums"]["contract_status"]
+          title: string
+          total_amount: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body?: string
+          client_email?: string | null
+          client_name?: string | null
+          client_signature?: string | null
+          client_signed_at?: string | null
+          created_at?: string
+          currency?: string
+          freelancer_signature?: string | null
+          freelancer_signed_at?: string | null
+          id?: string
+          project_id: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["contract_status"]
+          title: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          client_email?: string | null
+          client_name?: string | null
+          client_signature?: string | null
+          client_signed_at?: string | null
+          created_at?: string
+          currency?: string
+          freelancer_signature?: string | null
+          freelancer_signed_at?: string | null
+          id?: string
+          project_id?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["contract_status"]
+          title?: string
+          total_amount?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contracts_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      files: {
+        Row: {
+          created_at: string
+          id: string
+          mime_type: string | null
+          name: string
+          payment_required: boolean
+          preview_only: boolean
+          project_id: string
+          size_bytes: number
+          storage_path: string
+          user_id: string
+          watermark_enabled: boolean
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mime_type?: string | null
+          name: string
+          payment_required?: boolean
+          preview_only?: boolean
+          project_id: string
+          size_bytes?: number
+          storage_path: string
+          user_id: string
+          watermark_enabled?: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mime_type?: string | null
+          name?: string
+          payment_required?: boolean
+          preview_only?: boolean
+          project_id?: string
+          size_bytes?: number
+          storage_path?: string
+          user_id?: string
+          watermark_enabled?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "files_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -66,6 +234,7 @@ export type Database = {
           position: number
           rate_amount: number | null
           rate_type: Database["public"]["Enums"]["rate_type"]
+          share_token: string | null
           status: Database["public"]["Enums"]["project_status"]
           title: string
           updated_at: string
@@ -83,6 +252,7 @@ export type Database = {
           position?: number
           rate_amount?: number | null
           rate_type?: Database["public"]["Enums"]["rate_type"]
+          share_token?: string | null
           status?: Database["public"]["Enums"]["project_status"]
           title: string
           updated_at?: string
@@ -100,6 +270,7 @@ export type Database = {
           position?: number
           rate_amount?: number | null
           rate_type?: Database["public"]["Enums"]["rate_type"]
+          share_token?: string | null
           status?: Database["public"]["Enums"]["project_status"]
           title?: string
           updated_at?: string
@@ -258,6 +429,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      contract_status: "draft" | "sent" | "signed" | "declined" | "void"
       project_status:
         | "draft"
         | "active"
@@ -394,6 +566,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      contract_status: ["draft", "sent", "signed", "declined", "void"],
       project_status: ["draft", "active", "in_review", "completed", "archived"],
       rate_type: ["hourly", "fixed"],
       scope_status: ["pending", "in_progress", "done"],
