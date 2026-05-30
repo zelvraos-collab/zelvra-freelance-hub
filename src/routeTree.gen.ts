@@ -16,6 +16,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalTokenRouteImport } from './routes/portal.$token'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -61,6 +62,11 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalTokenRoute = PortalTokenRouteImport.update({
+  id: '/portal/$token',
+  path: '/portal/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRoute
+  '/portal/$token': typeof PortalTokenRoute
   '/contracts/$id': typeof AuthenticatedContractsIdRoute
   '/projects/$id': typeof AuthenticatedProjectsIdRoute
 }
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRoute
+  '/portal/$token': typeof PortalTokenRoute
   '/contracts/$id': typeof AuthenticatedContractsIdRoute
   '/projects/$id': typeof AuthenticatedProjectsIdRoute
 }
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/portal/$token': typeof PortalTokenRoute
   '/_authenticated/contracts/$id': typeof AuthenticatedContractsIdRoute
   '/_authenticated/projects/$id': typeof AuthenticatedProjectsIdRoute
 }
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/projects'
     | '/settings'
+    | '/portal/$token'
     | '/contracts/$id'
     | '/projects/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/projects'
     | '/settings'
+    | '/portal/$token'
     | '/contracts/$id'
     | '/projects/$id'
   id:
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/projects'
     | '/_authenticated/settings'
+    | '/portal/$token'
     | '/_authenticated/contracts/$id'
     | '/_authenticated/projects/$id'
   fileRoutesById: FileRoutesById
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  PortalTokenRoute: typeof PortalTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -310,6 +323,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal/$token': {
+      id: '/portal/$token'
+      path: '/portal/$token'
+      fullPath: '/portal/$token'
+      preLoaderRoute: typeof PortalTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/settings': {
@@ -464,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  PortalTokenRoute: PortalTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
