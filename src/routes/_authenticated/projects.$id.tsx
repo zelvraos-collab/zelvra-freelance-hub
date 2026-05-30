@@ -5,11 +5,13 @@ import { STATUS_ORDER, STATUS_META, formatMoney, type Project, type ProjectStatu
 import { StatusBadge } from "@/components/projects/StatusBadge";
 import { ScopeItems } from "@/components/projects/ScopeItems";
 import { TimeTracker } from "@/components/projects/TimeTracker";
+import { FileManager } from "@/components/projects/FileManager";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Trash2, Mail, Calendar, User } from "lucide-react";
+import { ArrowLeft, Trash2, Mail, Calendar, User, Link2, FolderOpen } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/projects/$id")({
@@ -125,6 +127,25 @@ function ProjectDetailPage() {
         />
       </div>
 
+      <Card className="bg-card/40 border-border/60">
+        <CardHeader>
+          <CardTitle className="font-display text-lg flex items-center gap-2"><Link2 className="w-4 h-4 text-primary" /> Client portal</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-2">Share this link with your client. They can view scope, sign contracts, and download files — no account needed.</p>
+          <div className="flex gap-2">
+            <Input readOnly value={`${typeof window !== "undefined" ? window.location.origin : ""}/portal/${project.share_token}`} className="text-xs font-mono" />
+            <Button
+              variant="outline"
+              onClick={() => {
+                navigator.clipboard.writeText(`${window.location.origin}/portal/${project.share_token}`);
+                toast.success("Portal link copied");
+              }}
+            >Copy</Button>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="bg-card/40 border-border/60">
           <CardHeader><CardTitle className="font-display text-lg">Scope</CardTitle></CardHeader>
@@ -135,6 +156,13 @@ function ProjectDetailPage() {
           <CardContent><TimeTracker projectId={project.id} /></CardContent>
         </Card>
       </div>
+
+      <Card className="bg-card/40 border-border/60">
+        <CardHeader>
+          <CardTitle className="font-display text-lg flex items-center gap-2"><FolderOpen className="w-4 h-4 text-primary" /> Files</CardTitle>
+        </CardHeader>
+        <CardContent><FileManager projectId={project.id} /></CardContent>
+      </Card>
     </div>
   );
 }
