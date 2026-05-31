@@ -182,6 +182,198 @@ export type Database = {
           },
         ]
       }
+      invoice_reminders: {
+        Row: {
+          channel: string
+          created_at: string
+          id: string
+          invoice_id: string
+          message: string | null
+          scheduled_for: string
+          sent_at: string | null
+          user_id: string
+        }
+        Insert: {
+          channel?: string
+          created_at?: string
+          id?: string
+          invoice_id: string
+          message?: string | null
+          scheduled_for: string
+          sent_at?: string | null
+          user_id: string
+        }
+        Update: {
+          channel?: string
+          created_at?: string
+          id?: string
+          invoice_id?: string
+          message?: string | null
+          scheduled_for?: string
+          sent_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      invoices: {
+        Row: {
+          amount_paid: number
+          client_address: string | null
+          client_email: string | null
+          client_name: string | null
+          contract_id: string | null
+          created_at: string
+          currency: string
+          discount: number
+          due_date: string | null
+          freelancer_address: string | null
+          freelancer_email: string | null
+          freelancer_name: string | null
+          id: string
+          is_escrow: boolean
+          issue_date: string
+          line_items: Json
+          notes: string | null
+          number: string
+          paid_at: string | null
+          project_id: string | null
+          sent_at: string | null
+          share_token: string | null
+          status: Database["public"]["Enums"]["invoice_status"]
+          subtotal: number
+          tax_amount: number
+          tax_rate: number
+          terms: string | null
+          total: number
+          updated_at: string
+          user_id: string
+          viewed_at: string | null
+        }
+        Insert: {
+          amount_paid?: number
+          client_address?: string | null
+          client_email?: string | null
+          client_name?: string | null
+          contract_id?: string | null
+          created_at?: string
+          currency?: string
+          discount?: number
+          due_date?: string | null
+          freelancer_address?: string | null
+          freelancer_email?: string | null
+          freelancer_name?: string | null
+          id?: string
+          is_escrow?: boolean
+          issue_date?: string
+          line_items?: Json
+          notes?: string | null
+          number: string
+          paid_at?: string | null
+          project_id?: string | null
+          sent_at?: string | null
+          share_token?: string | null
+          status?: Database["public"]["Enums"]["invoice_status"]
+          subtotal?: number
+          tax_amount?: number
+          tax_rate?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+          user_id: string
+          viewed_at?: string | null
+        }
+        Update: {
+          amount_paid?: number
+          client_address?: string | null
+          client_email?: string | null
+          client_name?: string | null
+          contract_id?: string | null
+          created_at?: string
+          currency?: string
+          discount?: number
+          due_date?: string | null
+          freelancer_address?: string | null
+          freelancer_email?: string | null
+          freelancer_name?: string | null
+          id?: string
+          is_escrow?: boolean
+          issue_date?: string
+          line_items?: Json
+          notes?: string | null
+          number?: string
+          paid_at?: string | null
+          project_id?: string | null
+          sent_at?: string | null
+          share_token?: string | null
+          status?: Database["public"]["Enums"]["invoice_status"]
+          subtotal?: number
+          tax_amount?: number
+          tax_rate?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+          user_id?: string
+          viewed_at?: string | null
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          invoice_id: string | null
+          kind: Database["public"]["Enums"]["payment_kind"]
+          notes: string | null
+          paid_at: string | null
+          payer_email: string | null
+          payer_name: string | null
+          project_id: string | null
+          provider: string | null
+          provider_ref: string | null
+          status: Database["public"]["Enums"]["payment_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          invoice_id?: string | null
+          kind?: Database["public"]["Enums"]["payment_kind"]
+          notes?: string | null
+          paid_at?: string | null
+          payer_email?: string | null
+          payer_name?: string | null
+          project_id?: string | null
+          provider?: string | null
+          provider_ref?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          invoice_id?: string | null
+          kind?: Database["public"]["Enums"]["payment_kind"]
+          notes?: string | null
+          paid_at?: string | null
+          payer_email?: string | null
+          payer_name?: string | null
+          project_id?: string | null
+          provider?: string | null
+          provider_ref?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -426,10 +618,30 @@ export type Database = {
         }
         Returns: boolean
       }
+      next_invoice_number: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
       contract_status: "draft" | "sent" | "signed" | "declined" | "void"
+      invoice_status:
+        | "draft"
+        | "sent"
+        | "viewed"
+        | "partially_paid"
+        | "paid"
+        | "overdue"
+        | "void"
+      payment_kind:
+        | "invoice"
+        | "escrow_deposit"
+        | "escrow_release"
+        | "milestone"
+      payment_status:
+        | "pending"
+        | "processing"
+        | "succeeded"
+        | "failed"
+        | "refunded"
       project_status:
         | "draft"
         | "active"
@@ -567,6 +779,28 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "moderator", "user"],
       contract_status: ["draft", "sent", "signed", "declined", "void"],
+      invoice_status: [
+        "draft",
+        "sent",
+        "viewed",
+        "partially_paid",
+        "paid",
+        "overdue",
+        "void",
+      ],
+      payment_kind: [
+        "invoice",
+        "escrow_deposit",
+        "escrow_release",
+        "milestone",
+      ],
+      payment_status: [
+        "pending",
+        "processing",
+        "succeeded",
+        "failed",
+        "refunded",
+      ],
       project_status: ["draft", "active", "in_review", "completed", "archived"],
       rate_type: ["hourly", "fixed"],
       scope_status: ["pending", "in_progress", "done"],
