@@ -129,3 +129,9 @@
     border: 1px solid oklch(1 0 0 / 0.08);
   }
 }
+
+@media print {
+  body { background: white !important; }
+  .print\:hidden { display: none !important; }
+  #invoice-print { box-shadow: none !important; }
+}
