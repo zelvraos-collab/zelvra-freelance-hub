@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { getPortalMessages, sendPortalMessage } from "@/lib/messages.functions";
-import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +10,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Send, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 
-export function PortalChat({ token, projectId, defaultName }: { token: string; projectId: string; defaultName?: string | null }) {
+export function PortalChat({ token, projectId: _projectId, defaultName }: { token: string; projectId: string; defaultName?: string | null }) {
   const fetchMsgs = useServerFn(getPortalMessages);
   const sendMsg = useServerFn(sendPortalMessage);
   const qc = useQueryClient();
@@ -22,22 +21,9 @@ export function PortalChat({ token, projectId, defaultName }: { token: string; p
   const { data } = useQuery({
     queryKey: ["portal-messages", token],
     queryFn: () => fetchMsgs({ data: { token } }),
+    refetchInterval: 4000,
   });
   const messages = data?.messages ?? [];
-
-  useEffect(() => {
-    const channel = supabase
-      .channel(`portal-messages:${projectId}`)
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "messages", filter: `project_id=eq.${projectId}` },
-        () => qc.invalidateQueries({ queryKey: ["portal-messages", token] }),
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [projectId, token, qc]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
