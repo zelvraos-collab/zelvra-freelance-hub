@@ -10,8 +10,9 @@ import {
   Sparkles,
   Settings,
   LogOut,
-  Bell,
   Search,
+} from "lucide-react";
+import { NotificationBell } from "@/components/dashboard/NotificationBell";
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
