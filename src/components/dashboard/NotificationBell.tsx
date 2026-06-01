@@ -120,7 +120,7 @@ export function NotificationBell() {
                 </div>
               );
               return n.link ? (
-                <Link key={n.id} to={n.link}>{inner}</Link>
+                <Link key={n.id} to={n.link as string}>{inner}</Link>
               ) : (
                 <div key={n.id}>{inner}</div>
               );
