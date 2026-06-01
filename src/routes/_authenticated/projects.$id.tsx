@@ -163,6 +163,8 @@ function ProjectDetailPage() {
         </CardHeader>
         <CardContent><FileManager projectId={project.id} /></CardContent>
       </Card>
+
+      <ChatPanel projectId={project.id} ownerId={project.user_id} />
     </div>
   );
 }
