@@ -317,6 +317,78 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          attachment_url: string | null
+          body: string
+          created_at: string
+          id: string
+          project_id: string
+          read_at: string | null
+          sender_id: string | null
+          sender_name: string
+          sender_role: string
+          user_id: string
+        }
+        Insert: {
+          attachment_url?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          project_id: string
+          read_at?: string | null
+          sender_id?: string | null
+          sender_name?: string
+          sender_role?: string
+          user_id: string
+        }
+        Update: {
+          attachment_url?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          project_id?: string
+          read_at?: string | null
+          sender_id?: string | null
+          sender_name?: string
+          sender_role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          link: string | null
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number

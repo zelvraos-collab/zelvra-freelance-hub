@@ -10,9 +10,9 @@ import {
   Sparkles,
   Settings,
   LogOut,
-  Bell,
   Search,
 } from "lucide-react";
+import { NotificationBell } from "@/components/dashboard/NotificationBell";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -100,9 +100,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <Input placeholder="Search projects, clients, invoices…" className="pl-9 h-10 bg-card/40" />
           </div>
           <div className="flex-1 md:hidden" />
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <Bell className="w-4 h-4" />
-          </Button>
+          <NotificationBell />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 rounded-full p-1 pr-3 hover:bg-accent/40 transition-colors">
