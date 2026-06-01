@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SignaturePad } from "@/components/signature/SignaturePad";
+import { PortalChat } from "@/components/messages/PortalChat";
 import { CONTRACT_STATUS_META, formatBytes } from "@/lib/contracts";
 import { STATUS_META } from "@/lib/projects";
 import { Shield, FileText, Download, Lock, CheckCircle2, Briefcase } from "lucide-react";
@@ -225,6 +226,11 @@ function PortalPage() {
             </CardContent>
           </Card>
         )}
+
+        <section>
+          <h2 className="font-display text-xl font-semibold mb-3">Messages</h2>
+          <PortalChat token={token} projectId={project.id} defaultName={project.client_name} />
+        </section>
 
         <footer className="text-center text-xs text-muted-foreground pt-8 pb-4 border-t border-border/60">
           Powered by <span className="font-display font-semibold text-foreground">Zelvra</span> — freelance without fear.
