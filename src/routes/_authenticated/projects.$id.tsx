@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/projects/StatusBadge";
 import { ScopeItems } from "@/components/projects/ScopeItems";
 import { TimeTracker } from "@/components/projects/TimeTracker";
 import { FileManager } from "@/components/projects/FileManager";
+import { ChatPanel } from "@/components/messages/ChatPanel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
