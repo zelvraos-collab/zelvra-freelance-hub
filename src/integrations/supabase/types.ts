@@ -14,6 +14,76 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_chat_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          project_id: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          project_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          project_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_chat_conversations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_chat_history: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["ai_chat_role"]
+          user_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["ai_chat_role"]
+          user_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["ai_chat_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_chat_history_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_chat_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contract_appendices: {
         Row: {
           amount: number | null
@@ -693,6 +763,7 @@ export type Database = {
       next_invoice_number: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
+      ai_chat_role: "user" | "assistant" | "system"
       app_role: "admin" | "moderator" | "user"
       contract_status: "draft" | "sent" | "signed" | "declined" | "void"
       invoice_status:
@@ -849,6 +920,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      ai_chat_role: ["user", "assistant", "system"],
       app_role: ["admin", "moderator", "user"],
       contract_status: ["draft", "sent", "signed", "declined", "void"],
       invoice_status: [
