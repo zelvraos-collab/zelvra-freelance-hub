@@ -115,17 +115,20 @@ function AssistantPage() {
     if (projectId === "none") return undefined;
     const { data: p } = await supabase
       .from("projects")
-      .select("title, client_name, status, priority, deadline, hourly_rate, description")
+      .select("title, client_name, status, deadline, rate_amount, rate_type, currency, description")
       .eq("id", projectId)
       .maybeSingle();
     if (!p) return undefined;
     const { data: scope } = await supabase
       .from("scope_items")
-      .select("title, done")
+      .select("title, status")
       .eq("project_id", projectId)
       .limit(50);
-    const scopeStr = (scope ?? []).map((s) => `- [${s.done ? "x" : " "}] ${s.title}`).join("\n");
-    return `Project: ${p.title}\nClient: ${p.client_name ?? "—"}\nStatus: ${p.status} (${p.priority})\nDeadline: ${p.deadline ?? "—"}\nRate: ${p.hourly_rate ?? "—"}\nDescription: ${p.description ?? "—"}\nScope:\n${scopeStr || "(no scope items)"}`;
+    const scopeStr = (scope ?? [])
+      .map((s) => `- [${s.status === "done" ? "x" : " "}] ${s.title}`)
+      .join("\n");
+    const rate = p.rate_amount != null ? `${p.currency} ${p.rate_amount} (${p.rate_type})` : "—";
+    return `Project: ${p.title}\nClient: ${p.client_name ?? "—"}\nStatus: ${p.status}\nDeadline: ${p.deadline ?? "—"}\nRate: ${rate}\nDescription: ${p.description ?? "—"}\nScope:\n${scopeStr || "(no scope items)"}`;
   };
 
   const send = async (overrideText?: string) => {
