@@ -18,6 +18,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalTokenRouteImport } from './routes/portal.$token'
 import { Route as InvoiceTokenRouteImport } from './routes/invoice.$token'
+import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -74,6 +75,11 @@ const PortalTokenRoute = PortalTokenRouteImport.update({
 const InvoiceTokenRoute = InvoiceTokenRouteImport.update({
   id: '/invoice/$token',
   path: '/invoice/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAiChatRoute = ApiAiChatRouteImport.update({
+  id: '/api/ai-chat',
+  path: '/api/ai-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/ai-chat': typeof ApiAiChatRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
   '/contracts/$id': typeof AuthenticatedContractsIdRoute
@@ -183,6 +190,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/ai-chat': typeof ApiAiChatRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
   '/contracts/$id': typeof AuthenticatedContractsIdRoute
@@ -208,6 +216,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/api/ai-chat': typeof ApiAiChatRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
   '/_authenticated/contracts/$id': typeof AuthenticatedContractsIdRoute
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/projects'
     | '/settings'
+    | '/api/ai-chat'
     | '/invoice/$token'
     | '/portal/$token'
     | '/contracts/$id'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/projects'
     | '/settings'
+    | '/api/ai-chat'
     | '/invoice/$token'
     | '/portal/$token'
     | '/contracts/$id'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/projects'
     | '/_authenticated/settings'
+    | '/api/ai-chat'
     | '/invoice/$token'
     | '/portal/$token'
     | '/_authenticated/contracts/$id'
@@ -295,6 +307,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiAiChatRoute: typeof ApiAiChatRoute
   InvoiceTokenRoute: typeof InvoiceTokenRoute
   PortalTokenRoute: typeof PortalTokenRoute
 }
@@ -362,6 +375,13 @@ declare module '@tanstack/react-router' {
       path: '/invoice/$token'
       fullPath: '/invoice/$token'
       preLoaderRoute: typeof InvoiceTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ai-chat': {
+      id: '/api/ai-chat'
+      path: '/api/ai-chat'
+      fullPath: '/api/ai-chat'
+      preLoaderRoute: typeof ApiAiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/settings': {
@@ -536,9 +556,20 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiAiChatRoute: ApiAiChatRoute,
   InvoiceTokenRoute: InvoiceTokenRoute,
   PortalTokenRoute: PortalTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
