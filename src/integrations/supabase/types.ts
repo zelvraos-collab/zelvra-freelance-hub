@@ -84,6 +84,76 @@ export type Database = {
           },
         ]
       }
+      change_orders: {
+        Row: {
+          created_at: string
+          currency: string
+          id: string
+          invoice_id: string | null
+          items: Json
+          project_id: string
+          rationale: string | null
+          source_message_id: string | null
+          status: Database["public"]["Enums"]["change_order_status"]
+          suggested_price: number
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          id?: string
+          invoice_id?: string | null
+          items?: Json
+          project_id: string
+          rationale?: string | null
+          source_message_id?: string | null
+          status?: Database["public"]["Enums"]["change_order_status"]
+          suggested_price?: number
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          id?: string
+          invoice_id?: string | null
+          items?: Json
+          project_id?: string
+          rationale?: string | null
+          source_message_id?: string | null
+          status?: Database["public"]["Enums"]["change_order_status"]
+          suggested_price?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "change_orders_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "change_orders_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "change_orders_source_message_id_fkey"
+            columns: ["source_message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contract_appendices: {
         Row: {
           amount: number | null
@@ -765,6 +835,7 @@ export type Database = {
     Enums: {
       ai_chat_role: "user" | "assistant" | "system"
       app_role: "admin" | "moderator" | "user"
+      change_order_status: "proposed" | "accepted" | "rejected" | "converted"
       contract_status: "draft" | "sent" | "signed" | "declined" | "void"
       invoice_status:
         | "draft"
@@ -922,6 +993,7 @@ export const Constants = {
     Enums: {
       ai_chat_role: ["user", "assistant", "system"],
       app_role: ["admin", "moderator", "user"],
+      change_order_status: ["proposed", "accepted", "rejected", "converted"],
       contract_status: ["draft", "sent", "signed", "declined", "void"],
       invoice_status: [
         "draft",
