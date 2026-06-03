@@ -7,6 +7,7 @@ import { ScopeItems } from "@/components/projects/ScopeItems";
 import { TimeTracker } from "@/components/projects/TimeTracker";
 import { FileManager } from "@/components/projects/FileManager";
 import { ChatPanel } from "@/components/messages/ChatPanel";
+import { ScopeCreepPanel } from "@/components/projects/ScopeCreepPanel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -164,6 +165,12 @@ function ProjectDetailPage() {
         </CardHeader>
         <CardContent><FileManager projectId={project.id} /></CardContent>
       </Card>
+
+      <ScopeCreepPanel
+        projectId={project.id}
+        clientName={project.client_name}
+        clientEmail={project.client_email}
+      />
 
       <ChatPanel projectId={project.id} ownerId={project.user_id} />
     </div>
