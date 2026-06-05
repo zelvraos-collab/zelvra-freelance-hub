@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Shield } from "lucide-react";
 import type { ReactNode } from "react";
+import logoAsset from "@/assets/zelvra-logo.jpg.asset.json";
 
 export function AuthCard({
   title,
