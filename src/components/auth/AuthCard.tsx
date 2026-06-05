@@ -21,8 +21,6 @@ export function AuthCard({
           <img src={logoAsset.url} alt="Zelvra" className="w-9 h-9 rounded-lg object-cover" />
           <span className="font-display text-xl font-semibold tracking-tight">Zelvra</span>
         </Link>
-          <span className="font-display text-xl font-semibold tracking-tight">Zelvra</span>
-        </Link>
         <div className="glass rounded-2xl p-8 shadow-elegant">
           <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">{title}</h1>
           {subtitle && <p className="mt-1.5 text-sm text-muted-foreground">{subtitle}</p>}
