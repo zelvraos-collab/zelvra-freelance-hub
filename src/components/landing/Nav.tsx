@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoAsset from "@/assets/zelvra-logo.jpg.asset.json";
 
 export function Nav() {
   return (
@@ -8,9 +8,7 @@ export function Nav() {
       <div className="mx-auto max-w-7xl px-4 mt-3">
         <div className="glass rounded-2xl flex items-center justify-between px-4 sm:px-6 py-3">
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="relative inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-primary shadow-glow">
-              <Shield className="w-4 h-4 text-primary-foreground" />
-            </span>
+            <img src={logoAsset.url} alt="Zelvra" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-display text-lg font-semibold tracking-tight">Zelvra</span>
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
