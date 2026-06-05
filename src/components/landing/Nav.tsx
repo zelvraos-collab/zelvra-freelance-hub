@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoAsset from "@/assets/zelvra-logo.jpg.asset.json";
 
 export function Nav() {
   return (
