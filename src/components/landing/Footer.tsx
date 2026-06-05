@@ -1,4 +1,4 @@
-import { Shield } from "lucide-react";
+import logoAsset from "@/assets/zelvra-logo.jpg.asset.json";
 
 export function Footer() {
   return (
