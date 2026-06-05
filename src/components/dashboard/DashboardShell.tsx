@@ -88,9 +88,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       <div className="lg:pl-64">
         <header className="sticky top-0 z-30 h-16 border-b border-border/60 bg-background/80 backdrop-blur flex items-center gap-3 px-4 sm:px-6">
           <Link to="/dashboard" className="lg:hidden flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-primary shadow-glow">
-              <Shield className="w-4 h-4 text-primary-foreground" />
-            </span>
+            <img src={logoAsset.url} alt="Zelvra" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-display font-semibold">Zelvra</span>
           </Link>
           <div className="hidden md:flex flex-1 max-w-md relative">
