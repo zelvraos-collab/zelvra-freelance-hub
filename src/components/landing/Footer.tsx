@@ -7,7 +7,6 @@ export function Footer() {
         <div>
           <div className="flex items-center gap-2">
             <img src={logoAsset.url} alt="Zelvra" className="w-8 h-8 rounded-lg object-cover" />
-          </div>
             <span className="font-display text-lg font-semibold">Zelvra</span>
           </div>
           <p className="mt-3 text-muted-foreground">Freelance without fear.</p>
