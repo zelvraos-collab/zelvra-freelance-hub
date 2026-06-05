@@ -6,9 +6,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 grid sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <Shield className="w-4 h-4 text-primary-foreground" />
-            </span>
+            <img src={logoAsset.url} alt="Zelvra" className="w-8 h-8 rounded-lg object-cover" />
+          </div>
             <span className="font-display text-lg font-semibold">Zelvra</span>
           </div>
           <p className="mt-3 text-muted-foreground">Freelance without fear.</p>
