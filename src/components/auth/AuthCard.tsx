@@ -18,9 +18,9 @@ export function AuthCard({
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.18),transparent_60%)]" aria-hidden />
       <div className="relative w-full max-w-md">
         <Link to="/" className="flex items-center gap-2 justify-center mb-8">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-primary shadow-glow">
-            <Shield className="w-4 h-4 text-primary-foreground" />
-          </span>
+          <img src={logoAsset.url} alt="Zelvra" className="w-9 h-9 rounded-lg object-cover" />
+          <span className="font-display text-xl font-semibold tracking-tight">Zelvra</span>
+        </Link>
           <span className="font-display text-xl font-semibold tracking-tight">Zelvra</span>
         </Link>
         <div className="glass rounded-2xl p-8 shadow-elegant">
