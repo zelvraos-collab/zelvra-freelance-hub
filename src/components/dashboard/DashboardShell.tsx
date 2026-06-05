@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
-  
+import logoAsset from "@/assets/zelvra-logo.jpg.asset.json";
   LayoutDashboard,
   Briefcase,
   FileText,
