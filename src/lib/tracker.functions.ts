@@ -144,7 +144,7 @@ export const startSession = createServerFn({ method: "POST" })
       after: { started_at: session.started_at, start_ip: ip },
     });
 
-    return { session };
+    return { session: normalizeSession(session) };
   });
 
 // ---- Heartbeat (1/min) ----
@@ -229,7 +229,7 @@ export const heartbeat = createServerFn({ method: "POST" })
       });
     }
 
-    return { autoPaused: lowStreak, ipChanged: !!ipChanged, session: updated };
+    return { autoPaused: lowStreak, ipChanged: !!ipChanged, session: updated ? normalizeSession(updated) : null };
   });
 
 // ---- Stop session ----
@@ -297,7 +297,7 @@ export const stopSession = createServerFn({ method: "POST" })
       after: { ended_at: endedAt, end_ip: ip, hash },
     });
 
-    return { session: updated };
+    return { session: normalizeSession(updated) };
   });
 
 // ---- Mark session viewed by client (locks it) ----
@@ -368,7 +368,7 @@ export const updateDispute = createServerFn({ method: "POST" })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
-    const patch: Record<string, unknown> = {};
+    const patch: DisputeUpdate = {};
     if (data.response !== undefined) patch.freelancer_response = data.response;
     if (data.status) {
       patch.status = data.status;
