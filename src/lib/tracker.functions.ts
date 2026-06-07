@@ -2,6 +2,27 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { getRequestIP, getRequestHeader } from "@tanstack/react-start/server";
+import type { Database } from "@/integrations/supabase/types";
+
+type SessionRow = Database["public"]["Tables"]["tracked_sessions"]["Row"];
+type SessionUpdate = Database["public"]["Tables"]["tracked_sessions"]["Update"];
+type DisputeUpdate = Database["public"]["Tables"]["session_disputes"]["Update"];
+
+// Plain-serializable session (INET → string)
+type SerializableSession = Omit<SessionRow, "start_ip" | "end_ip" | "flags"> & {
+  start_ip: string | null;
+  end_ip: string | null;
+  flags: string[];
+};
+
+function normalizeSession(s: SessionRow): SerializableSession {
+  return {
+    ...s,
+    start_ip: s.start_ip == null ? null : String(s.start_ip),
+    end_ip: s.end_ip == null ? null : String(s.end_ip),
+    flags: Array.isArray(s.flags) ? (s.flags as string[]) : [],
+  };
+}
 
 // SHA-256 of a canonical session string (Web Crypto, edge-safe)
 async function sha256(input: string) {
