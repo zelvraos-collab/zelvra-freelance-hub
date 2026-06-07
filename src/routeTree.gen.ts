@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalTokenRouteImport } from './routes/portal.$token'
 import { Route as InvoiceTokenRouteImport } from './routes/invoice.$token'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
+import { Route as AuthenticatedTimeTrackerRouteImport } from './routes/_authenticated/time-tracker'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -82,6 +83,12 @@ const ApiAiChatRoute = ApiAiChatRouteImport.update({
   path: '/api/ai-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedTimeTrackerRoute =
+  AuthenticatedTimeTrackerRouteImport.update({
+    id: '/time-tracker',
+    path: '/time-tracker',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -166,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRoute
+  '/time-tracker': typeof AuthenticatedTimeTrackerRoute
   '/api/ai-chat': typeof ApiAiChatRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
@@ -190,6 +198,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/settings': typeof AuthenticatedSettingsRoute
+  '/time-tracker': typeof AuthenticatedTimeTrackerRoute
   '/api/ai-chat': typeof ApiAiChatRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
@@ -216,6 +225,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/time-tracker': typeof AuthenticatedTimeTrackerRoute
   '/api/ai-chat': typeof ApiAiChatRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/projects'
     | '/settings'
+    | '/time-tracker'
     | '/api/ai-chat'
     | '/invoice/$token'
     | '/portal/$token'
@@ -266,6 +277,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/projects'
     | '/settings'
+    | '/time-tracker'
     | '/api/ai-chat'
     | '/invoice/$token'
     | '/portal/$token'
@@ -291,6 +303,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/projects'
     | '/_authenticated/settings'
+    | '/_authenticated/time-tracker'
     | '/api/ai-chat'
     | '/invoice/$token'
     | '/portal/$token'
@@ -383,6 +396,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/ai-chat'
       preLoaderRoute: typeof ApiAiChatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/time-tracker': {
+      id: '/_authenticated/time-tracker'
+      path: '/time-tracker'
+      fullPath: '/time-tracker'
+      preLoaderRoute: typeof AuthenticatedTimeTrackerRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
@@ -529,6 +549,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedProjectsRoute: typeof AuthenticatedProjectsRouteWithChildren
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedTimeTrackerRoute: typeof AuthenticatedTimeTrackerRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -542,6 +563,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedProjectsRoute: AuthenticatedProjectsRouteWithChildren,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedTimeTrackerRoute: AuthenticatedTimeTrackerRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -563,13 +585,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

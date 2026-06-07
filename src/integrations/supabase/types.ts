@@ -14,6 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_samples: {
+        Row: {
+          activity_pct: number
+          created_at: string
+          id: string
+          keys_count: number
+          mouse_clicks: number
+          mouse_moves: number
+          sampled_at: string
+          scrolls: number
+          session_id: string
+          tab_focused: boolean
+          user_id: string
+        }
+        Insert: {
+          activity_pct?: number
+          created_at?: string
+          id?: string
+          keys_count?: number
+          mouse_clicks?: number
+          mouse_moves?: number
+          sampled_at?: string
+          scrolls?: number
+          session_id: string
+          tab_focused?: boolean
+          user_id: string
+        }
+        Update: {
+          activity_pct?: number
+          created_at?: string
+          id?: string
+          keys_count?: number
+          mouse_clicks?: number
+          mouse_moves?: number
+          sampled_at?: string
+          scrolls?: number
+          session_id?: string
+          tab_focused?: boolean
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_samples_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "tracked_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_chat_conversations: {
         Row: {
           created_at: string
@@ -496,6 +546,36 @@ export type Database = {
         }
         Relationships: []
       }
+      monitoring_consent: {
+        Row: {
+          accepted_at: string
+          created_at: string
+          id: string
+          ip: unknown
+          user_agent: string | null
+          user_id: string
+          version: string
+        }
+        Insert: {
+          accepted_at?: string
+          created_at?: string
+          id?: string
+          ip?: unknown
+          user_agent?: string | null
+          user_id: string
+          version?: string
+        }
+        Update: {
+          accepted_at?: string
+          created_at?: string
+          id?: string
+          ip?: unknown
+          user_agent?: string | null
+          user_id?: string
+          version?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -729,6 +809,141 @@ export type Database = {
           },
         ]
       }
+      session_audit: {
+        Row: {
+          action: string
+          actor_id: string
+          after: Json | null
+          before: Json | null
+          created_at: string
+          id: string
+          reason: string | null
+          session_id: string
+        }
+        Insert: {
+          action: string
+          actor_id: string
+          after?: Json | null
+          before?: Json | null
+          created_at?: string
+          id?: string
+          reason?: string | null
+          session_id: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string
+          after?: Json | null
+          before?: Json | null
+          created_at?: string
+          id?: string
+          reason?: string | null
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_audit_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "tracked_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_disputes: {
+        Row: {
+          created_at: string
+          freelancer_response: string | null
+          id: string
+          raised_by: string
+          reason: string
+          resolved_at: string | null
+          session_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          freelancer_response?: string | null
+          id?: string
+          raised_by: string
+          reason: string
+          resolved_at?: string | null
+          session_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          freelancer_response?: string | null
+          id?: string
+          raised_by?: string
+          reason?: string
+          resolved_at?: string | null
+          session_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_disputes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "tracked_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_screenshots: {
+        Row: {
+          activity_pct: number
+          blurred: boolean
+          created_at: string
+          expires_at: string
+          hash: string | null
+          id: string
+          session_id: string
+          storage_path: string
+          suspicious: boolean
+          taken_at: string
+          user_id: string
+        }
+        Insert: {
+          activity_pct?: number
+          blurred?: boolean
+          created_at?: string
+          expires_at?: string
+          hash?: string | null
+          id?: string
+          session_id: string
+          storage_path: string
+          suspicious?: boolean
+          taken_at?: string
+          user_id: string
+        }
+        Update: {
+          activity_pct?: number
+          blurred?: boolean
+          created_at?: string
+          expires_at?: string
+          hash?: string | null
+          id?: string
+          session_id?: string
+          storage_path?: string
+          suspicious?: boolean
+          taken_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_screenshots_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "tracked_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       templates: {
         Row: {
           category: string | null
@@ -790,6 +1005,89 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "time_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tracked_sessions: {
+        Row: {
+          activity_score: number
+          client_viewed_at: string | null
+          created_at: string
+          device_fingerprint: string | null
+          duration_seconds: number
+          end_ip: unknown
+          ended_at: string | null
+          entry_hash: string | null
+          flags: Json
+          id: string
+          locked: boolean
+          notes: string | null
+          productivity_score: number
+          project_id: string
+          screenshot_count: number
+          start_ip: unknown
+          start_timezone: string | null
+          start_user_agent: string | null
+          started_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activity_score?: number
+          client_viewed_at?: string | null
+          created_at?: string
+          device_fingerprint?: string | null
+          duration_seconds?: number
+          end_ip?: unknown
+          ended_at?: string | null
+          entry_hash?: string | null
+          flags?: Json
+          id?: string
+          locked?: boolean
+          notes?: string | null
+          productivity_score?: number
+          project_id: string
+          screenshot_count?: number
+          start_ip?: unknown
+          start_timezone?: string | null
+          start_user_agent?: string | null
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          activity_score?: number
+          client_viewed_at?: string | null
+          created_at?: string
+          device_fingerprint?: string | null
+          duration_seconds?: number
+          end_ip?: unknown
+          ended_at?: string | null
+          entry_hash?: string | null
+          flags?: Json
+          id?: string
+          locked?: boolean
+          notes?: string | null
+          productivity_score?: number
+          project_id?: string
+          screenshot_count?: number
+          start_ip?: unknown
+          start_timezone?: string | null
+          start_user_agent?: string | null
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tracked_sessions_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"

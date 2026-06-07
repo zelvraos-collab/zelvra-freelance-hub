@@ -10,7 +10,9 @@ import {
   Settings,
   LogOut,
   Search,
+  Timer,
 } from "lucide-react";
+import { TimerWidget } from "@/components/tracker/TimerWidget";
 import logoAsset from "@/assets/zelvra-logo.jpg.asset.json";
 import { NotificationBell } from "@/components/dashboard/NotificationBell";
 import { useAuth } from "@/lib/auth-context";
@@ -30,6 +32,7 @@ import type { ReactNode } from "react";
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/projects", label: "Projects", icon: Briefcase },
+  { to: "/time-tracker", label: "Time Tracker", icon: Timer },
   { to: "/contracts", label: "Contracts", icon: FileText },
   { to: "/invoices", label: "Invoices", icon: Receipt },
   { to: "/messages", label: "Messages", icon: MessageSquare },
@@ -143,6 +146,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           })}
         </nav>
       </div>
+      <TimerWidget />
     </div>
   );
 }
