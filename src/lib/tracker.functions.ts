@@ -207,7 +207,7 @@ export const heartbeat = createServerFn({ method: "POST" })
     if (ipChanged && !flags.includes("ip_changed")) flags.push("ip_changed");
     if (lowStreak && !flags.includes("low_activity_pause")) flags.push("low_activity_pause");
 
-    const update: Record<string, unknown> = {
+    const update: SessionUpdate = {
       duration_seconds: (session.duration_seconds ?? 0) + 60,
       flags,
     };
