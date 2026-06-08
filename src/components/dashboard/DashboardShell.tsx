@@ -13,6 +13,7 @@ import {
   Timer,
 } from "lucide-react";
 import { TimerWidget } from "@/components/tracker/TimerWidget";
+import { VoiceAssistant } from "@/components/voice/VoiceAssistant";
 import logoAsset from "@/assets/zelvra-logo.jpg.asset.json";
 import { NotificationBell } from "@/components/dashboard/NotificationBell";
 import { useAuth } from "@/lib/auth-context";
@@ -147,6 +148,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </nav>
       </div>
       <TimerWidget />
+      <VoiceAssistant />
     </div>
   );
 }
