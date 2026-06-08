@@ -156,7 +156,7 @@ export function VoiceAssistant() {
       <button
         onClick={toggleMic}
         aria-label="Voice assistant"
-        className={`fixed z-40 bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center shadow-glow transition-all
+        className={`fixed z-40 top-6 right-6 w-14 h-14 rounded-full flex items-center justify-center shadow-glow transition-all
           bg-gradient-to-br from-primary to-purple-500 text-primary-foreground hover:scale-105
           ${listening ? "animate-pulse ring-4 ring-primary/40" : ""}`}
       >
@@ -165,7 +165,7 @@ export function VoiceAssistant() {
 
       {/* Panel */}
       {open && (
-        <div className="fixed z-40 bottom-24 right-4 sm:right-6 w-[min(380px,calc(100vw-2rem))] max-h-[70vh] rounded-2xl border border-border/60 bg-card/95 backdrop-blur-xl shadow-2xl flex flex-col">
+        <div className="fixed z-40 top-24 right-4 sm:right-6 w-[min(380px,calc(100vw-2rem))] max-h-[70vh] rounded-2xl border border-border/60 bg-card/95 backdrop-blur-xl shadow-2xl flex flex-col">
           <div className="flex items-center justify-between p-3 border-b border-border/60">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary" />
