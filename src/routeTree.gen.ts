@@ -18,6 +18,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalTokenRouteImport } from './routes/portal.$token'
 import { Route as InvoiceTokenRouteImport } from './routes/invoice.$token'
+import { Route as ApiVoiceCommandRouteImport } from './routes/api/voice-command'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
 import { Route as AuthenticatedTimeTrackerRouteImport } from './routes/_authenticated/time-tracker'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
@@ -76,6 +77,11 @@ const PortalTokenRoute = PortalTokenRouteImport.update({
 const InvoiceTokenRoute = InvoiceTokenRouteImport.update({
   id: '/invoice/$token',
   path: '/invoice/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVoiceCommandRoute = ApiVoiceCommandRouteImport.update({
+  id: '/api/voice-command',
+  path: '/api/voice-command',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAiChatRoute = ApiAiChatRouteImport.update({
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/time-tracker': typeof AuthenticatedTimeTrackerRoute
   '/api/ai-chat': typeof ApiAiChatRoute
+  '/api/voice-command': typeof ApiVoiceCommandRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
   '/contracts/$id': typeof AuthenticatedContractsIdRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/time-tracker': typeof AuthenticatedTimeTrackerRoute
   '/api/ai-chat': typeof ApiAiChatRoute
+  '/api/voice-command': typeof ApiVoiceCommandRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
   '/contracts/$id': typeof AuthenticatedContractsIdRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/time-tracker': typeof AuthenticatedTimeTrackerRoute
   '/api/ai-chat': typeof ApiAiChatRoute
+  '/api/voice-command': typeof ApiVoiceCommandRoute
   '/invoice/$token': typeof InvoiceTokenRoute
   '/portal/$token': typeof PortalTokenRoute
   '/_authenticated/contracts/$id': typeof AuthenticatedContractsIdRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/time-tracker'
     | '/api/ai-chat'
+    | '/api/voice-command'
     | '/invoice/$token'
     | '/portal/$token'
     | '/contracts/$id'
@@ -279,6 +289,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/time-tracker'
     | '/api/ai-chat'
+    | '/api/voice-command'
     | '/invoice/$token'
     | '/portal/$token'
     | '/contracts/$id'
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/_authenticated/time-tracker'
     | '/api/ai-chat'
+    | '/api/voice-command'
     | '/invoice/$token'
     | '/portal/$token'
     | '/_authenticated/contracts/$id'
@@ -321,6 +333,7 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiAiChatRoute: typeof ApiAiChatRoute
+  ApiVoiceCommandRoute: typeof ApiVoiceCommandRoute
   InvoiceTokenRoute: typeof InvoiceTokenRoute
   PortalTokenRoute: typeof PortalTokenRoute
 }
@@ -388,6 +401,13 @@ declare module '@tanstack/react-router' {
       path: '/invoice/$token'
       fullPath: '/invoice/$token'
       preLoaderRoute: typeof InvoiceTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/voice-command': {
+      id: '/api/voice-command'
+      path: '/api/voice-command'
+      fullPath: '/api/voice-command'
+      preLoaderRoute: typeof ApiVoiceCommandRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ai-chat': {
@@ -579,6 +599,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiAiChatRoute: ApiAiChatRoute,
+  ApiVoiceCommandRoute: ApiVoiceCommandRoute,
   InvoiceTokenRoute: InvoiceTokenRoute,
   PortalTokenRoute: PortalTokenRoute,
 }
